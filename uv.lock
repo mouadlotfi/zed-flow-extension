@@ -1,0 +1,23 @@
+version = 1
+revision = 3
+requires-python = ">=3.13"
+
+[[package]]
+name = "flowlauncher"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/8e/98/3bb09089aeff1ff560dbc2a85208c0e4f444d28b41fe0f0ac7b265638587/flowlauncher-0.2.0.tar.gz", hash = "sha256:b39f313f56007186aa77865849281ff25b574c69e0cf4831226df159ea4d20da", size = 37427, upload-time = "2022-11-07T02:06:38.112Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b5/15/d9bdbec55153d5bce91ade3a27bd1cc7de670097d3055c9a62258a36048e/flowlauncher-0.2.0-py3-none-any.whl", hash = "sha256:4ec914281a08abb2332125344ccf0ae172428d3388f67a7628db34d24a38bbdd", size = 5117, upload-time = "2022-11-07T02:06:36.664Z" },
+]
+
+[[package]]
+name = "zed-flow-extenstion"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "flowlauncher" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "flowlauncher", specifier = ">=0.2.0" }]
