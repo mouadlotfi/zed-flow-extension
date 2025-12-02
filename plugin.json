@@ -1,0 +1,13 @@
+{
+  "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
+  "ID": "7f3c9e12b4a847c6ad0f21e8c5b9d034",
+  "ActionKeywords": ["z"],
+  "Name": "Zed Workspace Plugin",
+  "Description": "idk",
+  "Author": "Shubham Bhatnagar",
+  "Version": "0.2",
+  "Language": "python",
+  "Website": "https://github.com/shubhambhatnag",
+  "ExecuteFileName": "./test.py",
+  "IcoPath": "./icon.png"
+}
