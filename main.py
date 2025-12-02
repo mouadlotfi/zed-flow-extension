@@ -79,7 +79,7 @@ class ZedWorkspaceSearch(FlowLauncher):
                 {
                     "Title": title,
                     "SubTitle": w["path"],
-                    "IcoPath": "Images/zed.png",
+                    "IcoPath": "assets/zed.png",
                     "JsonRPCAction": {
                         "method": "open_workspace",
                         "parameters": [w["path"]],
@@ -95,13 +95,19 @@ class ZedWorkspaceSearch(FlowLauncher):
 
         if is_wsl_path(path):
             # Open inside WSL
-            subprocess.Popen(["wsl", "zed", path], shell=False)
+            subprocess.Popen(
+                ["wsl", "zed", path],
+                shell=False,
+                creationflags=subprocess.CREATE_NO_WINDOW,
+            )
             return
 
         # Normal Windows path
         p = Path(path)
         if p.exists():
-            subprocess.Popen(["zed", str(p)], shell=False)
+            subprocess.Popen(
+                ["zed", str(p)], shell=False, creationflags=subprocess.CREATE_NO_WINDOW
+            )
         else:
             webbrowser.open("file:///")
 
@@ -126,9 +132,15 @@ class ZedWorkspaceSearch(FlowLauncher):
     def open_in_zed(self, path):
         """Open workspace using the appropriate environment."""
         if is_wsl_path(path):
-            subprocess.Popen(["wsl", "zed", path], shell=False)
+            subprocess.Popen(
+                ["wsl", "zed", path],
+                shell=False,
+                creationflags=subprocess.CREATE_NO_WINDOW,
+            )
         else:
-            subprocess.Popen(["zed", path], shell=False)
+            subprocess.Popen(
+                ["zed", path], shell=False, creationflags=subprocess.CREATE_NO_WINDOW
+            )
 
 
 if __name__ == "__main__":
