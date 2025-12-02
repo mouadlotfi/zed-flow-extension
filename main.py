@@ -32,18 +32,20 @@ class ZedWorkspaceSearch(FlowLauncher):
             rows = cur.fetchall()
             con.close()
 
-            results = []
+            results = {}
             for wid, path in rows:
-                if path and isinstance(path, str):
-                    results.append(
-                        {
-                            "id": wid,
-                            "path": path,
-                            "is_wsl": is_wsl_path(path),
-                        }
-                    )
+                if not path or not isinstance(path, str):
+                    continue
 
-            return results
+                # Keep only ONE path per workspace_id (the shortest path is usually the root)
+                if wid not in results or len(path) < len(results[wid]["path"]):
+                    results[wid] = {
+                        "id": wid,
+                        "path": path,
+                        "is_wsl": is_wsl_path(path),
+                    }
+
+            return list(results.values())
 
         except Exception as e:
             return [{"id": -1, "path": f"<Error reading DB: {e}>", "is_wsl": False}]
