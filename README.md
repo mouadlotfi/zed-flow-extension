@@ -2,7 +2,10 @@
 
 This extension provides workspace search functionality for Zed within Flow Launcher with the default keyword 'z'.
 
-This extension also provides WSL support!
+This extension supports:
+- **Windows local workspaces**
+- **WSL workspaces**
+- **SSH remote workspaces**
 
 ![image](./assets/search-example-fix.png)
 
