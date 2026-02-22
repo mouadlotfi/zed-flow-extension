@@ -6,14 +6,15 @@ This extension supports:
 - **Windows local workspaces**
 - **WSL workspaces**
 - **SSH remote workspaces**
-
+- **Ability to add custom DB path in Flow Settings (If you use Nightly or Preview)"
 ![image](./assets/search-example-fix.png)
 
 ## How it works
 
-On Windows, Zed stores workspace data in ```C:\Users\$USER\AppData\Local\Zed\db\0-stable\db.sqlite```.
+On Windows, Zed Stable stores workspace data in ```C:\Users\$USER\AppData\Local\Zed\db\0-stable\db.sqlite```.
 
 For each query, the plugin parses this sqlite file and serves requests with this data.
 
 Will add caching soon
+
 
