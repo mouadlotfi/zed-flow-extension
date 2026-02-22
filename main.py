@@ -11,8 +11,6 @@ plugindir = Path.absolute(Path(__file__).parent)
 paths = (".", "lib", "plugin")
 sys.path = [str(plugindir / p) for p in paths] + sys.path
 
-ZED_DB_PATH = Path.home() / "AppData/Local/Zed/db/0-stable/db.sqlite"
-
 
 def is_wsl_path(p: str) -> bool:
     """Detect whether a path belongs to WSL (only when not an SSH remote)."""
@@ -47,18 +45,37 @@ def normalize(p: str) -> str:
 
 
 class ZedWorkspaceSearch(FlowLauncher):
+    def __init__(self):
+        # Parse settings from the JSON-RPC request before FlowLauncher.__init__
+        # calls query(), since the base class doesn't expose settings
+        self._plugin_settings = {}
+        if len(sys.argv) > 1:
+            from json import loads
+
+            try:
+                rpc = loads(sys.argv[1])
+                self._plugin_settings = rpc.get("settings", {})
+            except Exception:
+                pass
+        super().__init__()
+
+    def _get_db_path(self):
+        default = "AppData/Local/Zed/db/0-stable/db.sqlite"
+        return Path.home() / self._plugin_settings.get("dbFilePath", default)
+
     def _load_workspaces(self):
-        if not ZED_DB_PATH.exists():
+        db_path = self._get_db_path()
+        if not db_path.exists():
             return []
 
         try:
-            con = sqlite3.connect(ZED_DB_PATH)
+            con = sqlite3.connect(db_path)
             cur = con.cursor()
 
             # JOIN with remote_connections to get SSH info
             cur.execute("""
-                SELECT 
-                    w.workspace_id, 
+                SELECT
+                    w.workspace_id,
                     w.paths,
                     rc.kind,
                     rc.host,
@@ -139,7 +156,7 @@ class ZedWorkspaceSearch(FlowLauncher):
             return [
                 {
                     "Title": "No Zed workspaces found",
-                    "SubTitle": str(ZED_DB_PATH),
+                    "SubTitle": str(self._get_db_path()),
                     "IcoPath": "assets/zed.png",
                 }
             ]

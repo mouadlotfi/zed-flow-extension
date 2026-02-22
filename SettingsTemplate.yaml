@@ -1,0 +1,9 @@
+body:
+    - type: input
+      attributes:
+          name: dbFilePath
+          label: Zed Database File Path
+          description: >
+              Path to your Zed workspace database file relative to your home directory.
+              Change this if you use Zed Preview (0-preview) or Zed Nightly (0-nightly).
+          defaultValue: AppData/Local/Zed/db/0-stable/db.sqlite
